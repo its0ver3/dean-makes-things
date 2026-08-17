@@ -4,8 +4,8 @@ A plain static website. No build step, no dependencies, no framework.
 
 ## Structure
 
-- `index.html` — home page with the latest post and writing list
-- `about/`, `projects/`, `books/` — static pages
+- `index.html` — home page with the latest post
+- `about/` — about and contact page
 - `writing/<slug>/` — one folder per post, each with an `index.html`
 - `style.css` — all styles, shared by every page
 
@@ -26,5 +26,8 @@ Then open http://localhost:8000
 
 ## Deploy
 
-Upload the folder to any static host (Cloudflare Pages, GitHub Pages,
-Netlify) — the repo root is the site root, no configuration needed.
+The site is published with GitHub Pages at
+https://its0ver3.github.io/dean-makes-things/.
+
+The publishing source is the `main` branch and the `/(root)` folder. Pushing a
+commit to `main` triggers a new deployment.

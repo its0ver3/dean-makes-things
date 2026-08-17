@@ -2,11 +2,6 @@ body {
   background: #f7f4ec;
 }
 
-article *::selection {
-  background: #00008b;
-  color: #fff;
-}
-
 main {
   max-width: 40rem;
   margin: auto;
@@ -43,21 +38,8 @@ a:focus-visible {
   text-decoration: none;
 }
 
-.site-title a:hover {
-  text-decoration: none;
-}
-
 main > h2 {
   margin-top: 2rem;
-}
-
-.more-writing {
-  margin-top: 3rem;
-}
-
-.writing-list {
-  padding-left: 0;
-  list-style: none;
 }
 
 .featured-post {
