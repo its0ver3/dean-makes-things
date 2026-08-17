@@ -46,6 +46,19 @@ main > h2 {
   margin-top: 3rem;
 }
 
+.post-index {
+  padding-left: 1.25rem;
+}
+
+.post-index li {
+  margin-block: 0.5rem;
+}
+
+.post-index time {
+  color: #5d5a53;
+  font-size: 0.85em;
+}
+
 article > h1,
 article > h2 {
   margin-bottom: 0;

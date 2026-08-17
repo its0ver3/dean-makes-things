@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>I made a Blender model follow my head with a webcam - Dean</title>
+  <meta name="description" content="How I made a webcam tracker that animates a Blender model in real time.">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+  <main>
+    <p class="back-link"><a href="../../">← Back</a></p>
+
+    <article>
+      <h1>I made a Blender model follow my head with a webcam</h1>
+      <p class="publication-date"><time datetime="2026-08-16">August 16, 2026</time></p>
+
+      <p>This started because I was wondering if I could control my Sonos speaker from the terminal.</p>
+
+      <p>I was using Claude Code in the terminal and asked if it could play a sound through my Sonos from my computer. It could. I messed around with a few other things like that, then wondered if I could run a specific script that would do the same thing.</p>
+
+      <p>For some reason, that turned into wondering if I could make a hand gesture and have it play a sound through the speaker.</p>
+
+      <p>I got it to track my hand and finger movements with my webcam. A thumbs-up would play a certain sound, and a middle finger would turn it off. It was a pretty pointless project, but it was fun.</p>
+
+      <p>The hand tracking was surprisingly good, so I started wondering if there was another use for it. I got it to track my head and neck position, then tried to hook that up to Blender.</p>
+
+      <p>I haven’t used Blender much. There didn’t seem to be a very good MCP for this kind of thing, but I was using Codex and it was able to use computer use to work through Blender and rig it all up. It gave me the instructions on how to use it, and after a few minor tweaks, it worked.</p>
+
+      <p>Now I have this somewhat useless but cool animator thing where a Blender model follows my head movements in real time. It can also track the jaw opening and where the eyes are looking.</p>
+
+      <figure class="article-figure">
+        <button class="lightbox-trigger" type="button" data-lightbox-caption="It surprised me how well it followed my movements." aria-haspopup="dialog">
+          <img src="images/head-tracking-demo.gif" width="960" height="388" alt="A webcam tracker follows a person's face on the left while a Blender character on the right copies their head movement" loading="lazy">
+        </button>
+        <figcaption>It surprised me how well it followed my movements.</figcaption>
+      </figure>
+
+      <p>I doubt this will turn into anything, but it's fun to explore new ideas.</p>
+
+      <p>Basically:</p>
+
+      <ul>
+        <li>A normal webcam sees my face.</li>
+        <li>MediaPipe’s Face Landmarker model works out the head movement, jaw opening, and eye direction.</li>
+        <li>head_neck_tracker.py sends that information to Blender on my own computer.</li>
+        <li>A small Blender add-on called head_neck_mocap turns that into movement on an MPFB human model’s neck, head, jaw, and eyes.</li>
+        <li>Used an MPFB human model.</li>
+      </ul>
+    </article>
+
+    <dialog class="image-lightbox" id="image-lightbox" aria-labelledby="lightbox-caption">
+      <button class="image-lightbox-close" type="button" aria-label="Close image viewer">×</button>
+      <img id="lightbox-image" alt="">
+      <p id="lightbox-caption"></p>
+    </dialog>
+  </main>
+
+  <script>
+    const lightbox = document.querySelector("#image-lightbox");
+    const lightboxImage = document.querySelector("#lightbox-image");
+    const lightboxCaption = document.querySelector("#lightbox-caption");
+    const closeButton = document.querySelector(".image-lightbox-close");
+    let lastTrigger;
+
+    document.querySelectorAll(".lightbox-trigger").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const image = trigger.querySelector("img");
+        lastTrigger = trigger;
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt;
+        lightboxCaption.textContent = trigger.dataset.lightboxCaption;
+        lightbox.showModal();
+      });
+    });
+
+    closeButton.addEventListener("click", () => lightbox.close());
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) {
+        lightbox.close();
+      }
+    });
+
+    lightbox.addEventListener("close", () => {
+      lightboxImage.removeAttribute("src");
+      lightboxImage.alt = "";
+      lightboxCaption.textContent = "";
+      lastTrigger?.focus();
+    });
+  </script>
+</body>
+</html>
