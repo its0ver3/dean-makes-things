@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Building ERSIM - a 911 call taker training tool - Dean</title>
+  <meta name="description" content="How a dinner conversation turned the Virtual Patient idea into a 911 call taker training simulator.">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+  <main>
+    <p class="back-link"><a href="../../">← Back</a></p>
+
+    <article>
+      <h1>Building ERSIM - a 911 call taker training tool</h1>
+      <p class="publication-date"><time datetime="2026-08-16">August 16, 2026</time></p>
+
+      <p>I started working on this project with my cousin, who works at a 911
+      call taking centre. We were out for dinner and I was telling him
+      about Virtual Patient. He mentioned that something like that could be
+      cool for his line of work, especially for training new call takers.</p>
+
+      <p>I already had the bones of it from Virtual Patient. I could just make
+      the scenario different, add in an ElevenLabs agent for the voice and
+      adjust the feedback. Turns out that worked pretty well.</p>
+
+      <p>The project is called ERSIM, or Emergency Response Simulator. During
+      a call, a trainee has to figure out the caller's location, get the
+      tombstone information, and choose the right file type. Afterwards it
+      looks at those things, as well as the overall call quality and how they
+      handled the situation.</p>
+
+      <p>The initial version was very similar to Virtual Patient. There were
+      case cards, you would pick a scenario and difficulty, run through the
+      call, and get a grade. It worked, but I started to think that it was a
+      bit too open-ended for this kind of product.</p>
+
+      <figure class="article-figure">
+        <button class="lightbox-trigger" type="button" data-lightbox-caption="Scenario cards" aria-haspopup="dialog">
+          <img src="images/scenario-cards.png" width="1615" height="951" alt="ERSIM's scenario screen showing eight simulated emergency-call cards with launch buttons">
+        </button>
+        <figcaption><strong>Scenario cards:</strong> The first version followed the Virtual Patient format, with different calls to choose from and a grade at the end.</figcaption>
+      </figure>
+
+      <p>I came up with the idea of pathways instead. Rather than dropping
+      people into any scenario, it is a curated progression where you build on
+      skills one at a time. You can start with easier calls, work on a specific
+      part of the job, and then move on once you have that down.</p>
+
+      <figure class="article-figure">
+        <button class="lightbox-trigger" type="button" data-lightbox-caption="Pathways" aria-haspopup="dialog">
+          <img src="images/pathways.png" width="1615" height="951" alt="ERSIM's pathway interface, showing the First Watch progression and its first training call">
+        </button>
+        <figcaption><strong>Pathways:</strong> A more structured way to move through calls, build skills, and unlock the next part of the shift.</figcaption>
+      </figure>
+
+      <p>I also tried a completely different UI. I turned it into a top-down,
+      sprite-based 2D game that felt a bit like Stardew Valley. The guts of it
+      were the same: you would take calls, get feedback, and improve. But
+      instead of clicking through pathways and case cards, you had a character
+      walking around and interacting with the world before starting calls.</p>
+
+      <figure class="article-figure">
+        <button class="lightbox-trigger" type="button" data-lightbox-caption="Game prototype" aria-haspopup="dialog">
+          <img src="images/game-prototype.png" width="1615" height="951" alt="ERSIM's game prototype, showing a top-down pixel-art 911 dispatch office with an interactive character">
+        </button>
+        <figcaption><strong>Game prototype:</strong> I tried a different direction where the training experience was part of a top-down 2D world.</figcaption>
+      </figure>
+
+      <p>That was a fun thing to experiment with. It could make sense as a
+      game or a more mass-market product, almost like an escape room. But I
+      think the professional training tool makes the most sense right now. The
+      ideal customer is an organization that is hiring people and wants to
+      train them faster while getting better-quality hires.</p>
+
+      <p>We have shown it to real call taker trainers and people who are in
+      training, and the reception has been really good. Right now it is a live
+      prototype and we are focused on building the rubric and learning
+      curriculum that will make it as useful as possible.</p>
+
+      <p>As a business, I think it will take a while to take hold. There are
+      companies in the States doing things like this, but I have not seen much
+      in Canada. I think the industry is moving in a direction where this could
+      become a really valuable tool.</p>
+
+      <p>More than anything, this project took what I learned from Virtual
+      Patient and put it into a completely new context. I learned a ton from
+      it, tried a bunch of different ideas, and felt like it moved my skills
+      forward.</p>
+
+      <p>You can try it out here: <a href="https://emergency-sim.vercel.app/">emergency-sim.vercel.app</a></p>
+
+      <p>You can learn more here: <a href="https://ersim.ca">ersim.ca</a></p>
+    </article>
+
+    <dialog class="image-lightbox" id="image-lightbox" aria-labelledby="lightbox-caption">
+      <button class="image-lightbox-close" type="button" aria-label="Close image viewer">×</button>
+      <img id="lightbox-image" alt="">
+      <p id="lightbox-caption"></p>
+    </dialog>
+  </main>
+
+  <script>
+    const lightbox = document.querySelector("#image-lightbox");
+    const lightboxImage = document.querySelector("#lightbox-image");
+    const lightboxCaption = document.querySelector("#lightbox-caption");
+    const closeButton = document.querySelector(".image-lightbox-close");
+    let lastTrigger;
+
+    document.querySelectorAll(".lightbox-trigger").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const image = trigger.querySelector("img");
+        lastTrigger = trigger;
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt;
+        lightboxCaption.textContent = trigger.dataset.lightboxCaption;
+        lightbox.showModal();
+      });
+    });
+
+    closeButton.addEventListener("click", () => lightbox.close());
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) {
+        lightbox.close();
+      }
+    });
+
+    lightbox.addEventListener("close", () => {
+      lightboxImage.removeAttribute("src");
+      lightboxImage.alt = "";
+      lightboxCaption.textContent = "";
+      lastTrigger?.focus();
+    });
+  </script>
+</body>
+</html>
