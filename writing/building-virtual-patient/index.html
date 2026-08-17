@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Building Virtual Patient - an RMT exam prep tool - Dean</title>
+  <meta name="description" content="Projects and notes from an independent builder working with AI.">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <p class="back-link"><a href="/">← Back</a></p>
+
+    <article>
+      <h1>Building Virtual Patient - an RMT exam prep tool</h1>
+      <p class="publication-date"><time datetime="2026-08-16">August 16, 2026</time></p>
+
+      <p>I started building this when I was teaching at the RMT college in
+      Vancouver. In class we had to go over mock patient scenarios where I
+      would be the patient and the students would ask me questions. The
+      engagement wasn’t super strong, and it was usually the same students
+      asking questions. I thought it would be more fun if we could interview a
+      patient together and talk about why we would ask certain questions.</p>
+
+      <p>So I built a simple web app hooked up to a Claude API and gave it a
+      patient scenario. It only took a bit of back and forth with Claude Code to
+      get something better
+      than the responses I would give in class. It felt like we were talking to
+      a “real” patient.</p>
+
+      <figure class="article-figure">
+        <button class="lightbox-trigger" type="button" data-lightbox-caption="Initial build" aria-haspopup="dialog">
+          <img src="images/initial-build.png" alt="The initial Virtual Patient build, showing a simple welcome page with a six-step training outline and four patient case buttons">
+        </button>
+        <figcaption><strong>Initial build:</strong> The first version was simple and focused on interviewing the patient. Despite the plain UI, it was well received.</figcaption>
+      </figure>
+
+      <p>I trialed it with one of my classes, and they were blown away. I tried
+      it with another class and
+      got the same response. So in my spare time, I kept chipping away at it and
+      evolving the product.</p>
+
+      <p>Students started asking if they could use it to study, and I thought,
+      why not? So I added auth, improved the UI, and added specific cases that
+      my exams would have. I had almost 50 users in the first few weeks.</p>
+
+      <figure class="article-figure">
+        <button class="lightbox-trigger" type="button" data-lightbox-caption="Current build" aria-haspopup="dialog">
+          <img src="images/current-build.png" alt="The current Virtual Patient dashboard, showing navigation, specialty tabs, patient cards, and controls for mystery and requested cases">
+        </button>
+        <figcaption><strong>Current build:</strong> The app has grown into a full training platform. Many different cases to pick from, voice-enabled interviews, structured feedback, and much more.</figcaption>
+      </figure>
+
+      <p>I’ve continued to work on it, but since leaving the profession, it’s lost
+      some of its luster. My plan was to turn it into a
+      board-exam-specific prep tool. It would help students gain confidence for
+      the exam, and there’s a (small) market for it. People pay hundreds of
+      dollars for a one-time, in-person prep exam; I could see them spending
+      half that for unlimited virtual prep.</p>
+
+      <p>Regardless of what comes of it in the future, I learned a ton from this
+      project.</p>
+
+      <p>Sign up for a free account and try it here: <a href="https://virtualpatient.io">virtualpatient.io</a></p>
+    </article>
+
+    <dialog class="image-lightbox" id="image-lightbox" aria-labelledby="lightbox-caption">
+      <button class="image-lightbox-close" type="button" aria-label="Close image viewer">×</button>
+      <img id="lightbox-image" src="" alt="">
+      <p id="lightbox-caption"></p>
+    </dialog>
+  </main>
+
+  <script>
+    const lightbox = document.querySelector("#image-lightbox");
+    const lightboxImage = document.querySelector("#lightbox-image");
+    const lightboxCaption = document.querySelector("#lightbox-caption");
+    const closeButton = document.querySelector(".image-lightbox-close");
+    let lastTrigger;
+
+    document.querySelectorAll(".lightbox-trigger").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const image = trigger.querySelector("img");
+        lastTrigger = trigger;
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt;
+        lightboxCaption.textContent = trigger.dataset.lightboxCaption;
+        lightbox.showModal();
+      });
+    });
+
+    closeButton.addEventListener("click", () => lightbox.close());
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) {
+        lightbox.close();
+      }
+    });
+
+    lightbox.addEventListener("close", () => {
+      lightboxImage.src = "";
+      lastTrigger?.focus();
+    });
+  </script>
+</body>
+</html>
