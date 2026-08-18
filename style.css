@@ -47,15 +47,14 @@ main > h2 {
 }
 
 .post-index {
-  padding-left: 1.25rem;
+  margin: 1rem 0;
 }
 
-.post-index li {
-  margin-block: 0.5rem;
+.post-index p {
+  margin-block: 0.15rem;
 }
 
 .post-index time {
-  color: #5d5a53;
   font-size: 0.85em;
 }
 
