@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Building KDI - a karaoke difficulty checker - Dean</title>
+  <meta name="description" content="Building a karaoke difficulty checker with Kimi K3, DeepSeek V4, and Claude, and having fun designing an app around music.">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+  <main>
+    <p class="back-link"><a href="../../">← Back</a></p>
+
+    <article>
+      <h1>Building KDI - a karaoke difficulty checker</h1>
+      <p class="publication-date"><time datetime="2026-10-07">October 7, 2026</time></p>
+
+      <p>A friend had an idea for figuring out how difficult a karaoke song is to sing. It sounded like a fun little project, and an excuse to try Kimi K3 and DeepSeek V4. I hadn’t used either before, so I bought some API credits on OpenRouter and took them for a spin.</p>
+
+      <p>K3’s first implementation was pretty good. It did what I wanted and added some nice touches with the album art that surprised me. DeepSeek did a similarly good job, but I ran through the credits pretty quickly.</p>
+
+      <figure class="article-figure">
+        <button class="lightbox-trigger" type="button" data-lightbox-caption="Start screen" aria-haspopup="dialog">
+          <img src="images/kdi-landing.png" width="1600" height="900" alt="KDI start screen asking what are you singing tonight with a search box and album art carousel">
+        </button>
+        <figcaption>The start screen, with album art while you search.</figcaption>
+      </figure>
+
+      <p>I was still having fun, so I switched back to Claude and kept working on the UI. Music is a big passion of mine, and there’s something really enjoyable about designing an app around your own hobbies. You get to make it look exactly how you want and add little details that most products wouldn’t bother with.</p>
+
+      <figure class="article-figure">
+        <button class="lightbox-trigger" type="button" data-lightbox-caption="Analysis in progress" aria-haspopup="dialog">
+          <img src="images/kdi-analysis.png" width="1600" height="900" alt="KDI analysis view showing a turntable animation with progress steps for matching song and hearing vocals and tracking notes">
+        </button>
+        <figcaption>A little turntable plays while the song is being analyzed.</figcaption>
+      </figure>
+
+      <p>Spotify is a good example. It works, but it isn’t laid out the way I’d want to browse and listen to my music. I imagine a lot of that comes from their goals around pushing playlists and other content. This project made me want to build my own music player so I could have more control over my library and how I use it.</p>
+
+      <figure class="article-figure">
+        <button class="lightbox-trigger" type="button" data-lightbox-caption="Result view" aria-haspopup="dialog">
+          <img src="images/kdi-result.png" width="1600" height="2310" alt="KDI result view showing an overall score and five record sleeves for range and holds and movement and breaks and total singing">
+        </button>
+        <figcaption>The result, with record sleeves you can open for more detail.</figcaption>
+      </figure>
+
+      <p>I only spent a couple of hours on this, but I learned a good amount. I’ll still be sticking with my OpenAI and Claude subscriptions for now. Even with relatively cheap models, I get so much more use out of those subscriptions than I did from the API credits.</p>
+    </article>
+
+    <dialog class="image-lightbox" id="image-lightbox" aria-labelledby="lightbox-caption">
+      <button class="image-lightbox-close" type="button" aria-label="Close image viewer">×</button>
+      <img id="lightbox-image" alt="">
+      <p id="lightbox-caption"></p>
+    </dialog>
+  </main>
+
+  <script>
+    const lightbox = document.querySelector("#image-lightbox");
+    const lightboxImage = document.querySelector("#lightbox-image");
+    const lightboxCaption = document.querySelector("#lightbox-caption");
+    const closeButton = document.querySelector(".image-lightbox-close");
+    let lastTrigger;
+
+    document.querySelectorAll(".lightbox-trigger").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const image = trigger.querySelector("img");
+        lastTrigger = trigger;
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt;
+        lightboxCaption.textContent = trigger.dataset.lightboxCaption;
+        lightbox.showModal();
+      });
+    });
+
+    closeButton.addEventListener("click", () => lightbox.close());
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) {
+        lightbox.close();
+      }
+    });
+
+    lightbox.addEventListener("close", () => {
+      lightboxImage.removeAttribute("src");
+      lightboxImage.alt = "";
+      lightboxCaption.textContent = "";
+      lastTrigger?.focus();
+    });
+  </script>
+</body>
+</html>
